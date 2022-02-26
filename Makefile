@@ -11,7 +11,7 @@ logs:
 
 # 実行
 build:
-	docker compose build --no-cache --force-rm
+	docker compose -f ./.devcontainer/docker-compose.yml build --no-cache --force-rm
 up:
 	docker compose up -d --build
 .PHONY: app

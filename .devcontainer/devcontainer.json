@@ -1,0 +1,12 @@
+{
+	"name": "cpp_atcoder",
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "app",
+	"workspaceFolder": "/app",
+	"settings": {},
+    "extensions": [
+        "ms-vscode.cpptools",
+    ]
+}
