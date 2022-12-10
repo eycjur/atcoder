@@ -1,3 +1,15 @@
+target := main
+
+all: run-cpp
+
+${target}.o: ${target}.cpp
+	g++ -o ${target}.o ${target}.cpp
+
+.PHONY: run-cpp
+run-cpp: ${target}.o
+	./${target}.o < input.txt
+
+
 ## dockerコマンド
 # 確認
 images:
@@ -8,32 +20,3 @@ volume:
 	docker volume ls
 logs:
 	docker compose logs
-
-# 実行
-build:
-	docker compose -f ./.devcontainer/docker-compose.yml build --no-cache --force-rm
-up:
-	docker compose up -d --build
-.PHONY: app
-app:
-	docker compose exec app bash
-root:
-	docker compose exec -u root app bash
-create-project:
-	@make build
-	@make up
-	@make app
-stop:
-	docker compose stop
-down:
-	docker compose down --remove-orphans
-restart:
-	@make down
-	@make up
-	@make app
-destroy:
-	docker compose down --rmi all --volumes --remove-orphans
-destroy-volumes:
-	docker compose down --volumes --remove-orphans
-prune:
-	docker system prune

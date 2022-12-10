@@ -2,11 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "cpp debugger",
+            "name": "C++ Debugger",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.o",
-            "args": [],
+            "args": [
+                "<",
+                "${fileDirname}/input.txt"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -20,6 +23,17 @@
                 }
             ],
             "preLaunchTask": "Build"
-        }
+        },
+        {
+            "name": "Python Debugger",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "<",
+                "${fileDirname}/input.txt"
+            ]
+        },
     ]
 }
