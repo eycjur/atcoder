@@ -1,3 +1,32 @@
-# atcoder template
+# 競技プログラミング用の開発環境
 
-- [Try Out Development Containers: C++](https://github.com/microsoft/vscode-remote-try-cpp)
+## 概要
+
+競技プログラミング用の開発環墋を構築するためのリポジトリです。
+
+以下の言語に対応しています。
+
+- Python
+- C++
+
+### Python
+
+#### 実行
+
+Ctrl + F5 キーを押下する。
+
+#### デバッグ
+
+F5 キーを押下する。
+
+### C++
+
+#### 実行
+
+```bash
+make
+```
+
+#### デバッグ
+
+F5 キーを押下する。

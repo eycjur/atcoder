@@ -13,6 +13,7 @@
             ]
         },
         {
+            // cf. https://github.com/microsoft/vscode-remote-try-cpp/blob/main/.vscode/launch.json
             "name": "C++ Debugger",
             "type": "cppdbg",
             "request": "launch",
