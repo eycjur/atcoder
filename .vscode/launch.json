@@ -2,6 +2,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "<",
+                "${fileDirname}/input.txt"
+            ]
+        },
+        {
             "name": "C++ Debugger",
             "type": "cppdbg",
             "request": "launch",
@@ -23,17 +34,6 @@
                 }
             ],
             "preLaunchTask": "Build"
-        },
-        {
-            "name": "Python Debugger",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "args":[
-                "<",
-                "${fileDirname}/input.txt"
-            ]
         },
     ]
 }

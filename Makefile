@@ -10,13 +10,7 @@ run-cpp: ${target}.o
 	./${target}.o < input.txt
 
 
-## dockerコマンド
-# 確認
-images:
-	docker images
-ps:
-	docker ps -a
-volume:
-	docker volume ls
-logs:
-	docker compose logs
+# コンテナを停止して削除
+.PHONY: down
+down:
+	docker compose down --remove-orphans

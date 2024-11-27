@@ -1,15 +1,19 @@
 {
-	"name": "cpp_atcoder",
-	"dockerComposeFile": [
-		"../docker-compose.yml"
-	],
-	"service": "app",
-	"workspaceFolder": "/workspace",
-	"settings": {},
-    "extensions": [
+  "name": "cpp_atcoder",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
         "ms-vscode.cpptools",
         "GitHub.copilot",
         "EditorConfig.EditorConfig",
-        "ms-python.python"
-    ]
+        "ms-python.python",
+        "mhutchie.git-graph"
+      ]
+    }
+  }
 }
