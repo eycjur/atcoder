@@ -1,0 +1,3 @@
+[submodule "ac-library-python"]
+	path = ac-library-python
+	url = https://github.com/eycjur/ac-library-python.git

@@ -1,9 +1,10 @@
 # キャッシュ関連
 .DS_Store
 *.o
+__pycache__/
 
 # プログラムファイル
 *.py
 *.cpp
 input.txt
-!atcoder.py
+!atcoder_cheatsheet.py

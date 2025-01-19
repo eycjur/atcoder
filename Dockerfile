@@ -7,4 +7,6 @@ RUN git clone https://github.com/atcoder/ac-library.git /lib/ac-library
 ENV CPLUS_INCLUDE_PATH /lib/ac-library
 
 COPY ./requirements.txt /workspace/
+COPY ./ac-library-python/ /workspace/ac-library-python/
 RUN pip install -U pip && pip install -r requirements.txt
+RUN pip install -e ac-library-python
