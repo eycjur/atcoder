@@ -12,5 +12,5 @@
 
 |        | Python    | Pypy                            | C++    |
 |--------|-----------|---------------------------------|--------|
-| 実行    | Ctrl + F5 | `time pypy main.py < input.txt` | `make` |
+| 実行    | Ctrl + F5 | `time pypy3 main.py < input.txt` | `make` |
 | デバッグ | F5        | 非対応                           | F5     |

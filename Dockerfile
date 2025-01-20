@@ -15,8 +15,8 @@ ENV CPLUS_INCLUDE_PATH /lib/ac-library
 
 COPY ./requirements.txt /workspace/
 COPY ./ac-library-python/ /workspace/ac-library-python/
-RUN pypy -m pip install -U pip && pip install -r requirements.txt
-RUN pypy -m pip install -e ac-library-python
-# pythonの場合
-# RUN pip install -U pip && pip install -r requirements.txt
-# RUN pip install -e ac-library-python
+RUN pypy3 -m pip install -U pip && pypy3 -m pip install -r requirements.txt --break-system-packages
+RUN pypy3 -m pip install -e ac-library-python
+# # pythonの場合
+# # RUN pip install -U pip && pip install -r requirements.txt --break-system-packages
+# # RUN pip install -e ac-library-python
