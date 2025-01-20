@@ -1,13 +1,17 @@
 FROM ubuntu:22.04
 
 ENV TZ=Asia/Tokyo
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update && \
-	apt install -y \
+RUN apt-get update && \
+	apt-get install -y \
 		sudo make vim zsh git neovim gdb bzip2 curl \
-		build-essential gfortran g++ libopenblas-dev liblapack-dev \
-		software-properties-common pkg-config
+		build-essential gfortran libopenblas-dev liblapack-dev \
+		software-properties-common pkg-config \
+        g++-12 && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/* && \
+	sudo ln -s /usr/bin/g++-12 /usr/local/bin/g++
 
 WORKDIR /opt
 # pypy3のインストール
@@ -20,15 +24,15 @@ RUN curl -O https://downloads.python.org/pypy/${PYPY_VERSION}-aarch64.tar.bz2 &&
 
 # python3.11のインストール
 RUN add-apt-repository ppa:deadsnakes/ppa -y && \
-		apt update && \
-		apt install -y python3.11 python3-pip && \
+		apt-get update && \
+		apt-get install -y python3.11 python3-pip && \
 		ln -sf /usr/bin/python3.11 /usr/local/bin/python3 && \
 		ln -sf /usr/bin/python3.11 /usr/local/bin/python
 
 
 WORKDIR /workspace
 RUN git clone https://github.com/atcoder/ac-library.git /lib/ac-library
-ENV CPLUS_INCLUDE_PATH /lib/ac-library
+ENV CPLUS_INCLUDE_PATH=/lib/ac-library
 
 COPY ./requirements_pypy.txt /requirements_python.txt /workspace/
 COPY ./ac-library-python/ /workspace/ac-library-python/
