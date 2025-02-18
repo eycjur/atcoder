@@ -7,4 +7,6 @@ __pycache__/
 *.py
 *.cpp
 input.txt
+output.txt
 !atcoder_cheatsheet.py
+*.png
