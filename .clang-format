@@ -1,0 +1,10 @@
+BasedOnStyle: Google
+IndentWidth: 2
+ColumnLimit: 120
+AlignAfterOpenBracket: BlockIndent
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine:  Never
+AllowShortIfStatementsOnASingleLine: Never
+InsertBraces: false
+DerivePointerAlignment: false
+PointerAlignment: Left

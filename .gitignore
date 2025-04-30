@@ -10,3 +10,5 @@ input.txt
 output.txt
 !atcoder_cheatsheet.py
 *.png
+in/
+out/

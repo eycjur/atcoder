@@ -48,70 +48,31 @@ from more_itertools import distinct_permutations  # 同じものを含む順列�
 from sortedcontainers import SortedDict, SortedList, SortedSet
 
 
-def binary_search_max(func: Callable[[int], bool], bottom: int, top: int) -> int:
-    """二分探索でfuncを満たす最大の値を探索する
+def binary_search(func: Callable[[int], bool], ok: int, ng: int) -> int:
+    """二分探索でfuncを満たす最大/最小の値を探索する
 
     Args:
         func (callable[[int], bool]):
             探索対象の関数。引数に探索する値を取り、探索対象が真か偽かを返す。
-        bottom (int): 探索範囲の下限
-        top (int): 探索範囲の上限
+        ok (int): 条件を満たす値
+        top (int): 条件を満たさない値
 
     Returns:
-        int: 探索した値
-
-    Examples:
-        >>> def func(x: int) -> bool:
-        ...     return x <= 10
-        >>> binary_search_max(func, 0, 100)
-        10
-    """
-    top += 1  # topはfuncを満たさないことを前提とする
-    # bottomはfuncを満たすことを前提とする
-
-    while top - bottom > 1:
-        mid = (top + bottom) // 2
-        if func(mid):
-            bottom = mid
-        else:
-            top = mid
-
-    # top: ng
-    # bottom: ok
-    return bottom
-
-
-def binary_search_min(func: Callable[[int], bool], bottom: int, top: int) -> int:
-    """二分探索でfuncを満たす最小の値を探索する
-
-    Args:
-        func (callable[[int], bool]):
-            探索対象の関数。引数に探索する値を取り、探索対象が真か偽かを返す。
-        bottom (int): 探索範囲の下限
-        top (int): 探索範囲の上限
-
-    Returns:
-        int: 探索した値
+        int: 条件を満たす最大/最小の値
 
     Examples:
         >>> def func(x: int) -> bool:
         ...     return x >= 10
-        >>> binary_search_min(func, 0, 100)
+        >>> binary_search(func, 0, 100)
         10
     """
-    # topはfuncを満たすことを前提とする
-    bottom -= 1  # bottomはfuncを満たさないことを前提とする
-
-    while top - bottom > 1:
-        mid = (top + bottom) // 2
+    while abs(ok - ng) > 1:
+        mid = (ok + ng) // 2
         if func(mid):
-            top = mid
+            ok = mid
         else:
-            bottom = mid
-
-    # top: ok
-    # bottom: ng
-    return top
+            ng = mid
+    return ok
 
 
 class HeapQ:
