@@ -1,6 +1,7 @@
 # ビルドを強制するため、make -Bで実行してください
 
 target := main
+SHELL := /bin/bash
 
 all: run-cpp
 
@@ -16,6 +17,19 @@ run-cpp-all: ${target}.o
 	for f in in/*; \
 		do ./${target}.o < "$$f"; \
 	done
+
+.PHONY: run-pypy
+run-pypy:
+	time uv run --python .pypy3.10 pypy main.py < input.txt
+
+.PHONY: run-python
+run-python:
+	time uv run --python .python3.11.4 python main.py < input.txt
+
+# コンテナのビルド・起動
+.PHONY: up
+up:
+	docker compose up -d --build
 
 # コンテナを停止して削除
 .PHONY: down

@@ -1,0 +1,4 @@
+{
+    "python.defaultInterpreterPath": "/workspace/.python3.11.4/bin/python",
+    "python.analysis.extraPaths": ["ac-library-python"]
+}
