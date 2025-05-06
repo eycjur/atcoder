@@ -21,7 +21,9 @@ ENV TZ=Asia/Tokyo
 
 WORKDIR /workspace
 
-RUN uv venv --python 3.11.4 .python3.11.4
+RUN uv venv --python 3.11.4 .python3.11.4 && \
+    ln -sf /workspace/.python3.11.4/bin/python /usr/local/bin/python3 && \
+    ln -sf /workspace/.python3.11.4/bin/python /usr/local/bin/python
 RUN uv venv --python pypy@3.10 .pypy3.10
 
 RUN git clone https://github.com/atcoder/ac-library.git /lib/ac-library

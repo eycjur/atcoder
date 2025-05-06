@@ -7,3 +7,9 @@ services:
     tty: true
     volumes:
       - .:/workspace
+      - dummy-volumes-for-python3.11.4:/workspace/.python3.11.4  # volume trick
+      - dummy-volumes-for-pypy3.10:/workspace/.pypy3.10
+
+volumes:
+  dummy-volumes-for-python3.11.4:
+  dummy-volumes-for-pypy3.10:

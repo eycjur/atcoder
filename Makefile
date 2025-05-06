@@ -26,6 +26,10 @@ run-pypy:
 run-python:
 	time uv run --python .python3.11.4 python main.py < input.txt
 
+.PHONY: python
+python:
+	uv run --python .python3.11.4 python
+
 # コンテナのビルド・起動
 .PHONY: up
 up:

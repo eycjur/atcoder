@@ -128,7 +128,7 @@ class HeapQ:
 
 
 # ローリングハッシュ
-class RollingHash():
+class RollingHash:
     """ローリングハッシュ
 
     Example:
@@ -176,6 +176,183 @@ class RollingHash():
             else:
                 high = mid
         return low
+
+
+class CustomHash:
+    """カスタムハッシュクラス
+
+    文字列のハッシュ値を計算するクラス
+
+    \_hash(S) = sum_{1 <= i <= n} (ord(S[i]) * base^(n - i)) % mod
+    hash(S) = (_hash(S), _hash(S)
+    S: 文字列
+    n: 文字列の長さ
+
+    Args:
+        bases (tuple[int, int], optional): ハッシュの基数. Defaults to (257, 1009).
+        mods (tuple[int, int], optional): ハッシュの法. Defaults to (999999937, 10**9 + 7).
+
+    Methods:
+        hash(string: str) -> tuple[int, int]:
+            文字列のハッシュ値を計算する
+        hash_each(string: str) -> list[tuple[int, int]]:
+            文字列の各文字のハッシュ値を計算する
+
+    Examples:
+        >>> ch = CustomHash()
+        >>> ch.hash("abc")
+        (6432038, 98852838)
+        >>> ch.hash_each("abc")
+        [(97, 97), (25027, 97971), (6432038, 98852838)]
+    """
+
+    def __init__(self, bases: tuple[int, int] = (257, 1009), mods: tuple[int, int] = (999999937, 10**9 + 7)) -> None:
+        self.bases = bases
+        self.mods = mods
+
+    def _hash(self, string: str, base: int, mod: int) -> int:
+        ret = 0
+        for s in string:
+            ret = (ret * base + ord(s)) % mod
+        return ret
+
+    def _hash_from_prev(self, prev_hash: tuple[int, int], new_char: str) -> tuple[int, int]:
+        return tuple(
+            (prev * base + ord(new_char)) % mod
+            for prev, base, mod in zip(prev_hash, self.bases, self.mods)
+        )
+
+    def hash(self, string: str) -> tuple[int, int]:
+        """文字列のハッシュ値を計算する
+
+        Args:
+            string (str): ハッシュ化する文字列
+
+        Returns:
+            tuple[int, int]: ハッシュ値
+        """
+        return tuple(
+            self._hash(string, base, mod)
+            for base, mod in zip(self.bases, self.mods)
+        )
+
+    def hash_each(self, string: str) -> list[tuple[int, int]]:
+        """文字列の各文字のハッシュ値を計算する
+
+        Args:
+            string (str): ハッシュ化する文字列
+        Returns:
+            list[tuple[int, int]]: ハッシュ値のリスト
+        """
+        hash_list = [self.hash(string[0])]
+        for i in range(1, len(string)):
+            hash_list.append(self._hash_from_prev(hash_list[i - 1], string[i]))
+        return hash_list
+
+
+class Trie:
+    """Trie木の実装
+
+    接頭辞を利用した検索を行うためのデータ構造。
+
+    Example:
+        >>> trie = Trie()
+        >>> trie.insert("fire")
+        0
+        >>> trie.insert("fish")
+        2  # これまでの単語との共通接頭辞の長さの和
+        >>> trie
+        root (2)
+            f (2)
+                i (2)
+                    r (1)
+                        e (1)★
+                    s (1)
+                        h (1)★
+        >>> trie.num_start_with("fire")
+        1
+        >>> trie.start_with("hoge")
+        False
+        >>> trie.count()  # 挿入した単語数
+        2
+    """
+    class Node:
+        def __init__(self) -> None:
+            self.children = {}
+            self.count = 0  # 何単語がこのノードを経由したか
+
+    def __init__(self):
+        """Trie木を初期化する"""
+        self.root = self.Node()
+
+    def insert(self, word: str) -> int:
+        """Trie木に単語を挿入する
+
+        Args:
+            word: 挿入する単語
+
+        Returns:
+            ans: これまでの単語との共通接頭辞の長さの和
+        """
+        node = self.root
+        self.root.count += 1
+        sum_prefix_length = 0
+        for char in word:
+            if char not in node.children:
+                # 子ノードがなければ新規追加
+                node.children[char] = self.Node()
+
+            node = node.children[char]
+            sum_prefix_length += node.count
+            # このノードを通過する単語数をカウント
+            node.count += 1
+        return sum_prefix_length
+
+    def num_start_with(self, prefix: str) -> bool:
+        """prefix で始まる単語の数を返す
+
+        Args:
+            prefix: 接頭辞
+        """
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.count
+
+    def start_with(self, prefix: str) -> bool:
+        """prefix で始まる単語が存在するかを返す
+
+        Args:
+            prefix: 検索する単語
+        """
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return True
+
+    def count(self) -> int:
+        """挿入済み単語数を返す"""
+        return self.root.count
+
+    def __str__(self):
+        """Trie の構造を文字列で返す"""
+        def dfs(node: Trie.Node, depth: int, char: str) -> str:
+            str_ = "    " * depth
+            if char == "":
+                str_ += f"root ({node.count})"
+            else:
+                str_ += f"{char} ({node.count})"
+                if node.count > sum([child.count for child in node.children.values()]):
+                    str_ += "★"
+            for next_char, next_node in node.children.items():
+                str_ += f"\n{dfs(next_node, depth + 1, next_char)}"
+            return str_
+
+        return dfs(self.root, 0, "")
 
 
 # グラフの可視化
