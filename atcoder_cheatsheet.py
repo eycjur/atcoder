@@ -48,6 +48,9 @@ from more_itertools import distinct_permutations  # 同じものを含む順列�
 from sortedcontainers import SortedDict, SortedList, SortedSet
 
 
+MOD_998 = 998244353
+MOD_1007 = 10 ** 9 + 7
+
 def binary_search(func: Callable[[int], bool], ok: int, ng: int) -> int:
     """二分探索でfuncを満たす最大/最小の値を探索する
 
@@ -401,3 +404,18 @@ def plot_graph_by_dict(data: dict | list, is_node_start_one: bool = True, is_dir
         print(edge_labels)
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
     plt.savefig("graph.png")
+
+
+def pop_count(n: int, k: int, mod: int | None = None) -> tuple[int, int]:
+    """n桁以下の2進数のうち、1の個数がk個のものの個数, 合計を求める"""
+    if k == 0:
+        return 1, 0
+    if n < k:  # n=0含む
+        return 0, 0
+    # 個数は、n桁のうちk桁を選ぶ組み合わせ
+    count = comb(n, k)
+    # 各桁に対して、他のn-1桁からk-1桁を選ぶ組み合わせの回数
+    sum = (pow(2, n, mod) - 1) * comb(n-1, k-1)
+    if mod is None:
+        return count, sum
+    return count % mod, sum % mod
