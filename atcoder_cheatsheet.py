@@ -359,7 +359,7 @@ class Trie:
 
 
 # グラフの可視化
-def plot_graph_by_dict(data: dict | list, is_node_start_one: bool = True, is_directed: bool = False) -> None:
+def plot_graph(data: dict | list, is_node_start_one: bool = True, is_directed: bool = False) -> None:
     """グラフを可視化して、graph.pngに保存する
 
     Args:
@@ -419,3 +419,21 @@ def pop_count(n: int, k: int, mod: int | None = None) -> tuple[int, int]:
     if mod is None:
         return count, sum
     return count % mod, sum % mod
+
+def compress_coordinates(arr: list[int]) -> list[int]:
+    """座標圧縮を行う
+
+    Args:
+        arr (list[int]): 圧縮する整数のリスト
+
+    Returns:
+        list[int]: 圧縮後の整数のリスト
+
+    Example:
+        >>> a = [1, 10, 10, 1000, 100, 100, 10]
+        >>> compress_coordinates(a)
+        [0, 1, 1, 3, 2, 2, 1]
+    """
+    arr_sort = sorted(set(arr))
+    value_map_index = {v: i for i, v in enumerate(arr_sort)}
+    return [value_map_index[v] for v in arr]

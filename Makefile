@@ -1,7 +1,12 @@
 # ビルドを強制するため、make -Bで実行してください
 
 target := main
-SHELL := /bin/bash
+SHELL := bash
+.SHELLFLAGS := -euo pipefail -c
+.ONESHELL:
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
 
 all: run-cpp
 
@@ -14,17 +19,35 @@ run-cpp: ${target}.o
 
 .PHONY: run-cpp-all
 run-cpp-all: ${target}.o
-	for f in in/*; \
-		do ./${target}.o < "$$f"; \
+	mkdir -p out
+	for f in in/*; do \
+		echo "$$f"; \
+		./${target}.o < "$$f" > out/$$(basename "$$f"); \
 	done
 
 .PHONY: run-pypy
 run-pypy:
 	time uv run --python .pypy3.10 pypy main.py < input.txt
 
+.PHONY: run-pypy-all
+run-pypy-all:
+	mkdir -p out
+	for f in in/*; do \
+		echo "$$f"; \
+		uv run --python .pypy3.10 pypy main.py  < "$$f" > out/$$(basename "$$f"); \
+	done
+
 .PHONY: run-python
 run-python:
 	time uv run --python .python3.11.4 python main.py < input.txt
+
+.PHONY: run-python-all
+run-python-all:
+	mkdir -p out
+	for f in in/*; do \
+		echo "$$f"; \
+		uv run --python .python3.11.4 python main.py  < "$$f" > out/$$(basename "$$f"); \
+	done
 
 .PHONY: python
 python:
